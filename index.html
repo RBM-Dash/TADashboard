@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TA Dashboard | Widgets</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/css/adminlte.min.css">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <!-- Navbar -->
+
+
+
+
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+
+
+                <!-- =========================================================== -->
+                <h5 class="mt-4 mb-2">Technical Assistance (2021)</h5>
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 col-12">
+                        <div class="info-box  bg-primary">
+                            <span class="info-box-icon"><i class="far fa-bookmark"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Requested</span>
+                                <span class="info-box-number" id="TARequested"></span>
+
+                                <div class="progress">
+                                    <div class="progress-bar" id="PercentTARequested" style="width: 70%"></div>
+                                </div>
+                                <span class="progress-description" id="textPercentTARequested">
+
+                                </span>
+
+
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+                    <div class=" col-md-3 col-sm-6 col-12">
+                        <div class="info-box bg-success">
+                            <span class="info-box-icon"><i class="far fa-thumbs-up"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Completed</span>
+                                <span class="info-box-number" id="TACompleted">41,410</span>
+
+                                <div class="progress">
+                                    <div class="progress-bar" id="PercentTACompleted" style="width: 70%">
+                                    </div>
+                                </div>
+                                <span class="progress-description" id="textPercentTACompleted">
+                                    of requested TA
+                                </span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-3 col-sm-6 col-12">
+                        <div class="info-box bg-warning">
+                            <span class="info-box-icon"><i class="fa fa-spinner" style="color:white"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Ongoing</span>
+                                <span class="info-box-number" id="TAOngoing">41,410</span>
+
+                                <div class="progress">
+                                    <div class="progress-bar" id="PercentTAOngoing" style="width: 70%"></div>
+                                </div>
+                                <span class="progress-description" id="textPercentTAOngoing">
+                                    of requested TA
+                                </span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-3 col-sm-6 col-12">
+                        <div class="info-box bg-danger">
+                            <span class="info-box-icon"><i class="ion-ios-alarm"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Postponed</span>
+                                <span class="info-box-number" id="TAPostponed">41,410</span>
+
+                                <div class="progress">
+                                    <div class="progress-bar" id="PercentTAPostponed" style="width: 70%">
+                                    </div>
+                                </div>
+                                <span class="progress-description" id="textPercentTAPostponed">
+                                    of requested TA
+                                </span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+
+
+
+                <div class="row">
+
+                    <div class=" gantt" id="GanttChartDIV">
+                    </div>
+
+                </div>
+                <!-- /.row -->
+
+
+
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+
+        <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+            <i class="fas fa-chevron-up"></i>
+        </a>
+
+        <!-- /.content-wrapper -->
+
+
+
+
+    </div>
+    <!-- ./wrapper -->
+
+    <!-- jQuery -->
+    <script src="../plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../js/adminlte.min.js"></script>
+    <script src="/js/papaparse.min.js"></script>
+    <script src="/js/lodash.min.js"></script>
+    <link href="/css/jsgantt.css" rel="stylesheet" type="text/css" />
+    <script src="/js/jsgantt.js" type="text/javascript"></script>
+
+</body>
+<script>
+    var g = new JSGantt.GanttChart(document.getElementById('GanttChartDIV'), 'quarter');
+    function onlyUnique(value, index, self) { return self.indexOf(value) === index; }
+    Papa.parse("https://docs.google.com/spreadsheets/d/1KUQ4RLhfd9y4HSLiDdkFGS7cuLr9-YMXqzNHpVV4nf4/gviz/tq?tqx=out:csv&sheet=MyTA 2021", {
+        download: true,
+        header: true,
+        dynamicTyping: true,
+        skipEmptyLines: 'greedy',
+        complete: function (results) {
+            //Erase records where cname is empty
+            let result = _.reject(results.data, { 'cname': null });
+            result = _.reject(result, { 'cname': "Country" });
+            //Erase Not Requested records
+            result = _.reject(result, { 'Status': "Not Requested" });
+            //Start filling the info boxes
+            $("#TARequested").text(result.length);
+            var countries = _.map(result, 'cname').filter(onlyUnique);
+            countries = countries.sort();
+
+            $("#TACompleted").text(_.filter(result, ['Status', "Completed"]).length);
+            $("#TAOngoing").text(_.filter(result, ['Status', "Ongoing"]).length);
+            $("#TAPostponed").text(_.filter(result, ['Status', "Postponed"]).length);
+            var myNum;
+            var myNumC = _.filter(result, ['Status', "Completed"]).length;
+            myNum = 100 * (myNumC / result.length);
+            $("#PercentTACompleted").width(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+            $("#textPercentTACompleted").text(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "% of requested TA");
+
+            var myNumO = (_.filter(result, ['Status', "Ongoing"]).length);
+            myNum = 100 * myNumO / result.length;
+            $("#PercentTAOngoing").width(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+            $("#textPercentTAOngoing").text(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "% of requested TA");
+
+            var myNumP = (_.filter(result, ['Status', "Postponed"]).length);
+            myNum = 100 * myNumP / result.length;
+            $("#PercentTAPostponed").width(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+            $("#textPercentTAPostponed").text(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "% of requested TA ");
+
+            myNum = 100 * (myNumO + myNumC) / result.length;
+            console.log(myNumO);
+            console.log(myNumC);
+            $("#PercentTARequested").width(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+            $("#textPercentTARequested").text(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "% Ongoing or Completed");
+            var temp; let myData = []; let tmp; let startDate;
+            let cont = 1; let isOpen = 1;
+            for (let i = 0; i < countries.length; i++) {
+                temp = _.filter(result, ['cname', countries[i]]);
+                let myD = []; let myldata = []; let myT = [];
+                if (i > 20) { isOpen = 0 };
+                //Define a group for the country
+                let myPParent = cont;
+                g.AddTaskItemObject({
+                    pID: myPParent,
+                    pName: countries[i],
+                    pStart: "",
+                    pEnd: "",
+                    pPlanStart: "",
+                    pPlanEnd: "",
+                    //pClass: "gtaskblue",
+                    pClass: "ggroupblack",
+                    pLink: "",
+                    pMile: 0,
+                    pRes: "",
+                    pComp: 0,
+                    pGroup: 1,
+                    pParent: 0,
+                    pOpen: isOpen,
+                    pDepend: "",
+                    pCaption: "",
+                    pCost: 0,
+                    pNotes: "",
+                    pBarText: "",
+                    category: "",
+                    sector: ""
+                });
+                cont = cont + 1;
+                for (let j = 0; j < temp.length; j++) {
+                    // Start filling the Gantt
+
+                    var currentTime = new Date();
+                    if (!(_.isEmpty(temp[j].StartYear))) {
+                        startDate = new Date(temp[j].OSDate);
+                        endDate = new Date(getFullYear(temp[j].OSDate), getMonth(temp[j].OSDate) + 2, 30);
+                    } else {
+                        //Retrieve the Date from the quarter and year
+                        if (!(_.isFinite(temp[j].StartYear))) { temp[j].StartYear = currentTime.getFullYear() };
+                        if ((_.isFinite(temp[j].StartQuarter) & (temp[j].StartYear > (currentTime.getFullYear() - 1)))) {
+                            endDate = new Date(temp[j].StartYear, (temp[j].StartQuarter * 3), 30);
+                            startDate = new Date(temp[j].StartYear, (temp[j].StartQuarter * 3 - 2), 1);
+
+                        }
+                    }
+                    //Fill in the Gantt structure
+                    //Define the class of the bar and the completation according to status
+                    switch (temp[j].Status) {
+                        case "Completed":
+                            myClass = "gtaskgreen";
+                            myComp = 100;
+                            break;
+                        case "Ongoing":
+                            myClass = "gtaskyellow";
+                            myComp = 100;
+                            break;
+                        case "Requested":
+                            myClass = "gtaskblue";
+                            myComp = 0;
+                            break;
+                        case "Postponed":
+                            myClass = "gtaskred";
+                            myComp = 0;
+                            break;
+                        default:
+                            myClass = "gtaskpurple";
+                            myComp = 0;
+                    }
+
+                    g.AddTaskItemObject({
+                        pID: cont,
+                        pName: temp[j].Activity,
+                        pStart: startDate,
+                        pEnd: endDate,
+                        pPlanStart: startDate,
+                        pPlanEnd: endDate,
+                        pClass: myClass,
+                        pLink: "",
+                        pMile: 0,
+                        pRes: temp[j].Partner,
+                        pComp: myComp,
+                        pGroup: 0,
+                        pParent: myPParent,
+                        pOpen: isOpen,
+                        pDepend: "",
+                        pCaption: temp[j].Status,
+                        pCost: 0,
+                        pNotes: temp[j].Comments,
+                        pBarText: "",
+                        category: "",
+                        sector: ""
+                    });
+                    cont = cont + 1;
+                }
+            }
+            console.log(g)
+            g.setUseFade(0);
+            g.setUseSort(0);
+            g.setShowDur(0);
+            g.setShowComp(0);
+            g.setShowEndDate(0);
+            g.setShowTaskInfoDur(0);
+            g.setShowTaskInfoComp(0);
+            g.setShowTaskInfoEndDate(0);
+            g.setShowSelector("Top");
+            g.setDateTaskTableDisplayFormat('mon, yyyy');
+            g.setAdditionalHeaders({ pCaption: { title: 'Status' } });
+            g.setOptions({
+                vCaptionType: 'Complete',  // Set to Show Caption : None,Caption,Resource,Duration,Complete,     
+                vQuarterColWidth: 36,
+                vDateTaskDisplayFormat: 'month yyyy', // Shown in tool tip box
+
+                vShowTaskInfoLink: 0, // Show link in tool tip (0/1)
+                vShowEndWeekDate: 0,  // Show/Hide the date for the last day of the week in header for daily view (1/0)
+                vUseSingleCell: 40000, // Set the threshold at which we will only use one cell per table row (0 disables).  Helps with rendering performance for large charts.
+                vFormatArr: ['Month', 'Quarter'], // Even with setUseSingleCell using Hour format on such a large chart can cause issues in some browsers
+            });
+
+
+            g.Draw();
+
+        },
+
+    });
+
+
+</script>
+
+</html>
