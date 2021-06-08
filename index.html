@@ -31,9 +31,29 @@
 
 
                 <!-- =========================================================== -->
-                <h5 class="mt-4 mb-2">Technical Assistance (2021)</h5>
+                <!-- <h5 class="mt-4 mb-2">Technical Assistance (2021)</h5> -->
                 <div class="row">
                     <div class="col-md-3 col-sm-6 col-12">
+                        <!-- <div class="small-box bg-gradient-primary">
+                            <div class="inner">
+                                <h3 id="TARequested">
+
+                                </h3>
+                                <p>
+                                    TA Requested
+                                </p>
+                                <small>
+                                    31% Ongoing or completed
+                                </small>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+
+                            </div>
+                            <a href="#" class="small-box-footer">
+                                More info <i class="fa fa-arrow-circle-right"></i>
+                            </a>
+                        </div> -->
                         <div class="info-box  bg-primary">
                             <span class="info-box-icon"><i class="far fa-bookmark"></i></span>
 
@@ -47,9 +67,8 @@
                                 <span class="progress-description" id="textPercentTARequested">
 
                                 </span>
-
-
                             </div>
+
                             <!-- /.info-box-content -->
                         </div>
                         <!-- /.info-box -->
@@ -61,14 +80,14 @@
 
                             <div class="info-box-content">
                                 <span class="info-box-text">Completed</span>
-                                <span class="info-box-number" id="TACompleted">41,410</span>
+                                <span class="info-box-number" id="TACompleted"></span>
 
                                 <div class="progress">
                                     <div class="progress-bar" id="PercentTACompleted" style="width: 70%">
                                     </div>
                                 </div>
                                 <span class="progress-description" id="textPercentTACompleted">
-                                    of requested TA
+
                                 </span>
                             </div>
                             <!-- /.info-box-content -->
@@ -82,13 +101,13 @@
 
                             <div class="info-box-content">
                                 <span class="info-box-text">Ongoing</span>
-                                <span class="info-box-number" id="TAOngoing">41,410</span>
+                                <span class="info-box-number" id="TAOngoing"></span>
 
                                 <div class="progress">
                                     <div class="progress-bar" id="PercentTAOngoing" style="width: 70%"></div>
                                 </div>
                                 <span class="progress-description" id="textPercentTAOngoing">
-                                    of requested TA
+
                                 </span>
                             </div>
                             <!-- /.info-box-content -->
@@ -102,14 +121,14 @@
 
                             <div class="info-box-content">
                                 <span class="info-box-text">Postponed</span>
-                                <span class="info-box-number" id="TAPostponed">41,410</span>
+                                <span class="info-box-number" id="TAPostponed"></span>
 
                                 <div class="progress">
                                     <div class="progress-bar" id="PercentTAPostponed" style="width: 70%">
                                     </div>
                                 </div>
                                 <span class="progress-description" id="textPercentTAPostponed">
-                                    of requested TA
+
                                 </span>
                             </div>
                             <!-- /.info-box-content -->
@@ -120,13 +139,55 @@
                 </div>
                 <!-- /.row -->
 
-
-
                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">TA Gantt Chart (2021)</h5>
 
-                    <div class=" gantt" id="GanttChartDIV">
+                                <div class="card-tools">
+
+                                    <div class="btn-group">
+                                        <button type="button" id="clist"
+                                            class="btn btn-default dropdown-toggle bg-primary text-xs"
+                                            data-toggle="dropdown">
+                                            Select Country
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-right has-mega-menu" role="menu"
+                                            id="cselect">
+                                            <a href="#" class="dropdown-item text-xs">All</a>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+
+                                        <div class="chart gantt" id="GanttChartDIV">
+
+                                            <!-- /.chart-responsive -->
+                                        </div>
+                                        <!-- /.col -->
+
+                                        <!-- ./card-body -->
+                                        <div class="card-footer"></div>
+
+
+
+
+                                    </div>
+                                    <!-- /.row -->
+                                </div>
+                                <!-- /.card-footer -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                        <!-- /.col -->
                     </div>
-
                 </div>
                 <!-- /.row -->
 
@@ -161,8 +222,145 @@
 
 </body>
 <script>
+
     var g = new JSGantt.GanttChart(document.getElementById('GanttChartDIV'), 'quarter');
     function onlyUnique(value, index, self) { return self.indexOf(value) === index; }
+
+    function fillGantt(result, myCountry) {
+        let cont = 0;
+        let isOpen = 1;
+        g.ClearTasks();
+        g.Draw();
+
+        for (let i = 0; i < myCountry.length; i++) {
+            temp = _.filter(result, ['cname', myCountry[i]]);
+
+            let myD = []; let myldata = []; let myT = [];
+            if (i > 20) { isOpen = 0 };
+            //Define a group for the country
+            let myPParent = cont;
+
+
+            cont = cont + 1;
+            for (let j = 0; j < temp.length; j++) {
+                // Start filling the Gantt
+
+                var currentTime = new Date();
+                if (!(_.isEmpty(temp[j].StartYear))) {
+                    startDate = new Date(temp[j].OSDate);
+                    endDate = new Date(getFullYear(temp[j].OSDate), getMonth(temp[j].OSDate) + 2, 30);
+                } else {
+                    //Retrieve the Date from the quarter and year
+                    if (!(_.isFinite(temp[j].StartYear))) { temp[j].StartYear = currentTime.getFullYear() };
+                    if ((_.isFinite(temp[j].StartQuarter) & (temp[j].StartYear > (currentTime.getFullYear() - 1)))) {
+                        endDate = new Date(temp[j].StartYear, (temp[j].StartQuarter * 3), 30);
+                        startDate = new Date(temp[j].StartYear, (temp[j].StartQuarter * 3 - 2), 1);
+
+                    }
+                }
+                if (j == 0) {
+                    g.AddTaskItemObject({
+                        pID: myPParent,
+                        pName: myCountry[i],
+                        pStart: startDate,
+                        pEnd: "",
+                        pPlanStart: "",
+                        pPlanEnd: "",
+                        //pClass: "gtaskblue",
+                        pClass: "ggroupblack",
+                        pLink: "",
+                        pMile: 0,
+                        pRes: "",
+                        pComp: 0,
+                        pGroup: 1,
+                        pParent: 0,
+                        pOpen: isOpen,
+                        pDepend: "",
+                        pCaption: "",
+                        pCost: 0,
+                        pNotes: "",
+                        pBarText: "",
+                        category: "",
+                        sector: ""
+                    });
+                };
+                //Fill in the Gantt structure
+                //Define the class of the bar and the completation according to status
+                switch (temp[j].Status) {
+                    case "Completed":
+                        myClass = "gtaskgreen";
+                        myComp = 100;
+                        break;
+                    case "Ongoing":
+                        myClass = "gtaskyellow";
+                        myComp = (100 * (Math.abs(currentTime - startDate) / Math.abs(endDate - startDate))).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+
+                        console.log(myComp)
+                        break;
+                    case "Requested":
+                        myClass = "gtaskblue";
+                        myComp = 0;
+                        break;
+                    case "Postponed":
+                        myClass = "gtaskred";
+                        myComp = 0;
+                        break;
+                    default:
+                        myClass = "gtaskpurple";
+                        myComp = 0;
+                }
+
+                g.AddTaskItemObject({
+                    pID: cont,
+                    pName: temp[j].Activity,
+                    pStart: startDate,
+                    pEnd: endDate,
+                    pPlanStart: startDate,
+                    pPlanEnd: endDate,
+                    pClass: myClass,
+                    pLink: "",
+                    pMile: 0,
+                    pRes: temp[j].Partner,
+                    pComp: myComp,
+                    pGroup: 0,
+                    pParent: myPParent,
+                    pOpen: isOpen,
+                    pDepend: "",
+                    pCaption: temp[j].Status,
+                    pCost: 0,
+                    pNotes: temp[j].Comments,
+                    pBarText: "",
+                    category: "",
+                    sector: ""
+                });
+                cont = cont + 1;
+            }
+        }
+
+        g.setUseFade(0);
+        g.setUseMove(0);
+        g.setUseSort(0);
+        g.setShowDur(0);
+        g.setShowComp(0);
+        g.setShowEndDate(0);
+        g.setShowTaskInfoDur(0);
+        g.setShowTaskInfoComp(0);
+        g.setShowTaskInfoEndDate(0);
+        g.setShowSelector("Top");
+        g.setDateTaskTableDisplayFormat('mon, yyyy');
+        g.setAdditionalHeaders({ pCaption: { title: 'Status' } });
+        g.setOptions({
+            vCaptionType: 'Complete',  // Set to Show Caption : None,Caption,Resource,Duration,Complete,     
+            vQuarterColWidth: 30,
+            vDateTaskDisplayFormat: 'month yyyy', // Shown in tool tip box
+
+            vShowTaskInfoLink: 0, // Show link in tool tip (0/1)
+            vShowEndWeekDate: 0,  // Show/Hide the date for the last day of the week in header for daily view (1/0)
+            vUseSingleCell: 0, // Set the threshold at which we will only use one cell per table row (0 disables).  Helps with rendering performance for large charts.
+            vFormatArr: ['Month', 'Quarter'], // Even with setUseSingleCell using Hour format on such a large chart can cause issues in some browsers
+        });
+        return g;
+    };
     Papa.parse("https://docs.google.com/spreadsheets/d/1KUQ4RLhfd9y4HSLiDdkFGS7cuLr9-YMXqzNHpVV4nf4/gviz/tq?tqx=out:csv&sheet=MyTA 2021", {
         download: true,
         header: true,
@@ -176,161 +374,82 @@
             result = _.reject(result, { 'Status': "Not Requested" });
             //Start filling the info boxes
             $("#TARequested").text(result.length);
-            var countries = _.map(result, 'cname').filter(onlyUnique);
-            countries = countries.sort();
-
             $("#TACompleted").text(_.filter(result, ['Status', "Completed"]).length);
             $("#TAOngoing").text(_.filter(result, ['Status', "Ongoing"]).length);
             $("#TAPostponed").text(_.filter(result, ['Status', "Postponed"]).length);
             var myNum;
             var myNumC = _.filter(result, ['Status', "Completed"]).length;
             myNum = 100 * (myNumC / result.length);
-            $("#PercentTACompleted").width(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+            //$("#PercentTACompleted").width(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+            $("#PercentTACompleted").attr("style", "width:" + myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "%");
             $("#textPercentTACompleted").text(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "% of requested TA");
 
             var myNumO = (_.filter(result, ['Status', "Ongoing"]).length);
             myNum = 100 * myNumO / result.length;
-            $("#PercentTAOngoing").width(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+            // $("#PercentTAOngoing").width(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+            $("#PercentTAOngoing").attr("style", "width:" + myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "%");
+
             $("#textPercentTAOngoing").text(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "% of requested TA");
 
             var myNumP = (_.filter(result, ['Status', "Postponed"]).length);
             myNum = 100 * myNumP / result.length;
-            $("#PercentTAPostponed").width(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+            // $("#PercentTAPostponed").width(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+            $("#PercentTAPostponed").attr("style", "width:" + myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "%");
             $("#textPercentTAPostponed").text(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "% of requested TA ");
 
             myNum = 100 * (myNumO + myNumC) / result.length;
-            console.log(myNumO);
-            console.log(myNumC);
-            $("#PercentTARequested").width(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+
+            //$("#PercentTARequested").width(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }));
+            $("#PercentTARequested").attr("style", "width:" + myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "%");
             $("#textPercentTARequested").text(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "% Ongoing or Completed");
-            var temp; let myData = []; let tmp; let startDate;
-            let cont = 1; let isOpen = 1;
-            for (let i = 0; i < countries.length; i++) {
-                temp = _.filter(result, ['cname', countries[i]]);
-                let myD = []; let myldata = []; let myT = [];
-                if (i > 20) { isOpen = 0 };
-                //Define a group for the country
-                let myPParent = cont;
-                g.AddTaskItemObject({
-                    pID: myPParent,
-                    pName: countries[i],
-                    pStart: "",
-                    pEnd: "",
-                    pPlanStart: "",
-                    pPlanEnd: "",
-                    //pClass: "gtaskblue",
-                    pClass: "ggroupblack",
-                    pLink: "",
-                    pMile: 0,
-                    pRes: "",
-                    pComp: 0,
-                    pGroup: 1,
-                    pParent: 0,
-                    pOpen: isOpen,
-                    pDepend: "",
-                    pCaption: "",
-                    pCost: 0,
-                    pNotes: "",
-                    pBarText: "",
-                    category: "",
-                    sector: ""
-                });
-                cont = cont + 1;
-                for (let j = 0; j < temp.length; j++) {
-                    // Start filling the Gantt
 
-                    var currentTime = new Date();
-                    if (!(_.isEmpty(temp[j].StartYear))) {
-                        startDate = new Date(temp[j].OSDate);
-                        endDate = new Date(getFullYear(temp[j].OSDate), getMonth(temp[j].OSDate) + 2, 30);
-                    } else {
-                        //Retrieve the Date from the quarter and year
-                        if (!(_.isFinite(temp[j].StartYear))) { temp[j].StartYear = currentTime.getFullYear() };
-                        if ((_.isFinite(temp[j].StartQuarter) & (temp[j].StartYear > (currentTime.getFullYear() - 1)))) {
-                            endDate = new Date(temp[j].StartYear, (temp[j].StartQuarter * 3), 30);
-                            startDate = new Date(temp[j].StartYear, (temp[j].StartQuarter * 3 - 2), 1);
+            //Populate dropdown list of countries
+            var countries = _.map(result, 'cname').filter(onlyUnique);
+            countries = countries.sort();
+            const ocountries = _.map(result, 'cname').filter(onlyUnique);
 
-                        }
-                    }
-                    //Fill in the Gantt structure
-                    //Define the class of the bar and the completation according to status
-                    switch (temp[j].Status) {
-                        case "Completed":
-                            myClass = "gtaskgreen";
-                            myComp = 100;
-                            break;
-                        case "Ongoing":
-                            myClass = "gtaskyellow";
-                            myComp = 100;
-                            break;
-                        case "Requested":
-                            myClass = "gtaskblue";
-                            myComp = 0;
-                            break;
-                        case "Postponed":
-                            myClass = "gtaskred";
-                            myComp = 0;
-                            break;
-                        default:
-                            myClass = "gtaskpurple";
-                            myComp = 0;
-                    }
+            var lCountries = $("#cselect");
 
-                    g.AddTaskItemObject({
-                        pID: cont,
-                        pName: temp[j].Activity,
-                        pStart: startDate,
-                        pEnd: endDate,
-                        pPlanStart: startDate,
-                        pPlanEnd: endDate,
-                        pClass: myClass,
-                        pLink: "",
-                        pMile: 0,
-                        pRes: temp[j].Partner,
-                        pComp: myComp,
-                        pGroup: 0,
-                        pParent: myPParent,
-                        pOpen: isOpen,
-                        pDepend: "",
-                        pCaption: temp[j].Status,
-                        pCost: 0,
-                        pNotes: temp[j].Comments,
-                        pBarText: "",
-                        category: "",
-                        sector: ""
-                    });
-                    cont = cont + 1;
-                }
-            }
-            console.log(g)
-            g.setUseFade(0);
-            g.setUseSort(0);
-            g.setShowDur(0);
-            g.setShowComp(0);
-            g.setShowEndDate(0);
-            g.setShowTaskInfoDur(0);
-            g.setShowTaskInfoComp(0);
-            g.setShowTaskInfoEndDate(0);
-            g.setShowSelector("Top");
-            g.setDateTaskTableDisplayFormat('mon, yyyy');
-            g.setAdditionalHeaders({ pCaption: { title: 'Status' } });
-            g.setOptions({
-                vCaptionType: 'Complete',  // Set to Show Caption : None,Caption,Resource,Duration,Complete,     
-                vQuarterColWidth: 36,
-                vDateTaskDisplayFormat: 'month yyyy', // Shown in tool tip box
+            $(countries).each(function () {
+                var option = $("<a></a>");
 
-                vShowTaskInfoLink: 0, // Show link in tool tip (0/1)
-                vShowEndWeekDate: 0,  // Show/Hide the date for the last day of the week in header for daily view (1/0)
-                vUseSingleCell: 40000, // Set the threshold at which we will only use one cell per table row (0 disables).  Helps with rendering performance for large charts.
-                vFormatArr: ['Month', 'Quarter'], // Even with setUseSingleCell using Hour format on such a large chart can cause issues in some browsers
+                //Set country Name in Text part.
+                option.html(this);
+
+                //Set class and href.
+                $(option).attr("class", "dropdown-item text-xs");
+                $(option).attr("href", "#");
+
+                //console.log(option)
+                //Add the Option element to DropDownList.
+                lCountries.append(option);
             });
 
+            /*   var temp; let myData = []; let tmp; let startDate;
+              let cont = 1; */
+            var myCountry = countries;
 
+            //Find a way to monitor the dropdown list and filter by country if requested
+
+            $("#cselect a").on('click', function (e) {
+                e.preventDefault(); // cancel the link behaviour
+                var myCountry = [$(this).text()];
+                if (myCountry[0] === "All") { myCountry = countries };
+
+                g = fillGantt(result, myCountry, g);
+
+                g.Draw();
+            });
+            var g = fillGantt(result, myCountry);
             g.Draw();
+
+
+
 
         },
 
     });
+
 
 
 </script>
