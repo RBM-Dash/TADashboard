@@ -2,7 +2,7 @@
 
 div.gantt {
   font-family: tahoma, arial, verdana, Sans-serif;
-  font-size: 10px;
+  font-size: 11px;
   color: #656565;
 }
 
@@ -56,7 +56,7 @@ div.gantt {
 .gminorheading {
   background-color: #ffffff;
   font-weight: bold;
-  font-size: 9px;
+  font-size: 11px;
   white-space: nowrap;
 }
 
@@ -65,7 +65,7 @@ div.gantt {
 .gminorheadingwkend {
   background-color: #f7f7f7;
   font-weight: bold;
-  font-size: 9px;
+  font-size: 11px;
   white-space: nowrap;
 }
 
@@ -142,7 +142,7 @@ td.gspanning {
   min-width: 105px;
   width: 105px;
   max-width: 105px;
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .gtaskheading {
@@ -156,7 +156,7 @@ td.gspanning {
   min-width: 170px;
   max-width: 170px;
   width: 170px;
-  font-size: 9px;
+  font-size: 11px;
   border-left: none;
 }
 
@@ -230,8 +230,9 @@ span.gfoldercollapse {
 /* Differentiate Group, Milestone and Ordinary task items (applied to row) */
 
 .ggroupitem {
-  background-color: #fbfbfb;
+  background-color: #c8d9ec;
   font-weight: bold;
+  color: black;
 }
 
 .gmileitem,
@@ -243,7 +244,7 @@ span.gfoldercollapse {
 
 .gitemhighlight td {
   background-image: none;
-  background-color: #fffde5;
+  background-color: #f8f8f5;
 }
 
 /* task bar caption text styles */
@@ -321,8 +322,8 @@ span.gfoldercollapse {
 .gtaskyellow,
 .gtaskpurple,
 .gtaskpink {
-  height: 13px;
-  filter: alpha(opacity=90);
+  height: 10px;
+  /*filter: alpha(opacity=90);*/
   opacity: 0.9;
   margin-top: 1px;
 }
@@ -371,20 +372,20 @@ span.gfoldercollapse {
 }
 
 .gtaskblue {
-  background: rgb(2, 98, 255);
+  background: rgb(31, 139, 255);
   /* Old browsers */
-  background: linear-gradient(to bottom, rgb(6, 79, 196) 0%, rgba(72, 90, 224, 1) 20%, rgb(8, 6, 128) 40%, rgba(0, 26, 223, 1) 70%, rgba(38, 85, 139, 0.5) 100%);
+  /*background: linear-gradient(to bottom, rgb(6, 79, 196) 0%, rgba(72, 90, 224, 1) 20%, rgb(8, 6, 128) 40%, rgba(0, 26, 223, 1) 70%, rgba(38, 85, 139, 0.5) 100%);
   /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#007bff', endColorstr='#007bff', GradientType=0);
+  /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#007bff', endColorstr='#007bff', GradientType=0);
   /* IE6-9 */
 }
 
 .gtaskred {
   background: rgb(220, 53, 69);
   /* Old browsers */
-  background: linear-gradient(to bottom, rgba(196, 58, 58, 1) 0%, rgba(211, 65, 65, 1) 20%, rgba(239, 76, 76, 1) 40%, rgba(196, 58, 58, 1) 70%, rgba(135, 37, 37, 1) 100%);
+  /*background: linear-gradient(to bottom, rgba(196, 58, 58, 1) 0%, rgba(211, 65, 65, 1) 20%, rgba(239, 76, 76, 1) 40%, rgba(196, 58, 58, 1) 70%, rgba(135, 37, 37, 1) 100%);*/
   /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#DC3545', endColorstr='#c43a3a', GradientType=0);
+  /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#DC3545', endColorstr='#c43a3a', GradientType=0);*/
   /* IE6-9 */
 }
 
@@ -392,36 +393,36 @@ span.gfoldercollapse {
   background: rgb(40, 167, 69);
  
   /* Old browsers */
-  background: linear-gradient(to bottom, rgba(80, 193, 58, 1) 0%, rgba(88, 209, 64, 1) 20%, rgba(102, 237, 75, 1) 40%, rgba(80, 193, 58, 1) 70%, rgba(53, 132, 37, 1) 100%);
+  /*background: linear-gradient(to bottom, rgba(80, 193, 58, 1) 0%, rgba(88, 209, 64, 1) 20%, rgba(102, 237, 75, 1) 40%, rgba(80, 193, 58, 1) 70%, rgba(53, 132, 37, 1) 100%);*/
   /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='# #28A745', endColorstr='#50c13a', GradientType=0);
+  /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='# #28A745', endColorstr='#50c13a', GradientType=0);*/
   /* IE6-9 */
 }
 
 .gtaskyellow {
-  background: rgb(247, 228, 56);
+  background: rgb(255, 193, 7);
   /* Old browsers */
-  background: linear-gradient(to bottom, rgba(247, 228, 56, 1) 0%, rgba(239, 239, 55, 1) 20%, rgba(255, 255, 58, 1) 40%, rgba(242, 236, 55, 1) 70%, rgba(241, 218, 54, 1) 100%);
+  /*background: linear-gradient(to bottom, rgba(247, 228, 56, 1) 0%, rgba(239, 239, 55, 1) 20%, rgba(255, 255, 58, 1) 40%, rgba(242, 236, 55, 1) 70%, rgba(241, 218, 54, 1) 100%);*/
   /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffff3a', endColorstr='#f7e438', GradientType=0);
+  /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffff3a', endColorstr='#f7e438', GradientType=0);*/
   /* IE6-9 */
 }
 
 .gtaskpurple {
-  background: rgb(255, 193, 7);
+  background: rgb(255, 98, 7);
   /* Old browsers */
-  background: linear-gradient(to bottom, rgb(255, 193, 7) 0%, rgba(211, 65, 211, 1) 20%, rgba(239, 76, 239, 1) 40%, rgba(193, 58, 193, 1) 70%, rgba(137, 38, 137, 1) 100%);
+  /*background: linear-gradient(to bottom, rgb(255, 193, 7) 0%, rgba(211, 65, 211, 1) 20%, rgba(239, 76, 239, 1) 40%, rgba(193, 58, 193, 1) 70%, rgba(137, 38, 137, 1) 100%);
   /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFC107', endColorstr='#892689', GradientType=0);
+  /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFC107', endColorstr='#892689', GradientType=0);
   /* IE6-9 */
 }
 
 .gtaskpink {
-  background: rgb(249, 177, 245);
+  background: rgb(23, 162, 184);
   /* Old browsers */
-  background: linear-gradient(to bottom, rgba(249, 177, 245, 1) 0%, rgba(247, 192, 243, 1) 20%, rgba(247, 202, 244, 1) 40%, rgba(249, 192, 246, 1) 70%, rgba(252, 174, 247, 1) 100%);
+  /*background: linear-gradient(to bottom, rgba(249, 177, 245, 1) 0%, rgba(247, 192, 243, 1) 20%, rgba(247, 202, 244, 1) 40%, rgba(249, 192, 246, 1) 70%, rgba(252, 174, 247, 1) 100%);*/
   /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7caf4', endColorstr='#fcaef7', GradientType=0);
+  /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7caf4', endColorstr='#fcaef7', GradientType=0);*/
   /* IE6-9 */
 }
 
@@ -433,11 +434,11 @@ span.gfoldercollapse {
 .gtaskpinkcomplete {
   float: left;
   overflow: hidden;
-  height: 5px;
-  filter: alpha(opacity=40);
-  opacity: 0.4;
-  background-color: #000000;
-  margin-top: 4px;
+  height: 2px;
+  filter: alpha(opacity=0.1);
+  opacity: 0.1;
+  background-color: #f5e6e6;
+  margin-top: 2px;
 }
 
 /*  END Task bar styles */
@@ -496,7 +497,7 @@ div.gtaskbarcontainer {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 40%;
+  width: 20%;
   display: inline-block;
 }
 
@@ -515,19 +516,20 @@ div.gtaskbarcontainer {
 }
 
 .gTaskInfo {
-  background: #dbecff;
-  width: 400px;
+  background: #00070f;
+  width: 300px;
   border: #656565 1px solid;
   border-radius: 10px;
   padding: 4px 6px 4px 6px;
   float: left;
+  color: white;
 }
 
 .gTtTitle {
   display: block;
   font-size: 12px;
   font-weight: bold;
-  color: #404040;
+  color: white;
   margin-left: 4px;
   margin-bottom: 1em;
 }
@@ -535,7 +537,7 @@ div.gtaskbarcontainer {
 .gTaskLabel {
   font-size: 11px;
   font-weight: bold;
-  color: #656565;
+  color: white;
   margin-left: 4px;
 }
 
@@ -543,15 +545,15 @@ div.gtaskbarcontainer {
   position: absolute;
   left: 90px;
   padding-top: 1px;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: normal;
-  color: #656565;
+  color: white;
 }
 
 .gTaskNotes {
   font-size: 11px;
   font-weight: normal;
-  color: #323232;
+  color: white;
   padding: 0 15px;
   display: block;
 }
@@ -774,7 +776,7 @@ td.gspanning div {
   width: 70px;
   max-width: 70px;
   min-width: 70px;
-  font-size: 10px;
+  font-size: 11px;
 }
 
 @media print {
@@ -850,7 +852,7 @@ td.gspanning div {
 
 .gmainleft {
   overflow: hidden;
-  flex: 0 0 50%;
+  flex: 0 0 60%;
   /* Allow side to grow and shrink */
   flex: 1 0 auto;
 }
@@ -913,7 +915,7 @@ td.gspanning div {
   .gtaskyellow {
     height: 0px;
     border-top: 13px solid;
-    border-color: rgb(247, 228, 56);
+    border-color: rgb(255, 193, 7);
   }
 
   .gtaskpurple {
