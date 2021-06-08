@@ -235,7 +235,7 @@
             this.vChartTable = null;
             this.vLines = null;
             this.vTimer = 20;
-            this.vTooltipDelay = 1500;
+            this.vTooltipDelay = 150;
             this.vTooltipTemplate = null;
             this.vMinDate = null;
             this.vMaxDate = null;
