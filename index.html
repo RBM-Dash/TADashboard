@@ -5,7 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>TA Dashboard | Widgets</title>
-
+    <style type="text/css">
+        .dropdown-menu {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -33,60 +38,62 @@
                 <!-- =========================================================== -->
                 <!-- <h5 class="mt-4 mb-2">Technical Assistance (2021)</h5> -->
                 <div class="row">
-                    <div class="col-md-3 col-sm-6 col-12">
-                        <!-- <div class="small-box bg-gradient-primary">
-                            <div class="inner">
-                                <h3 id="TARequested">
+                    <div class=" col-md-2 col-sm-6 col-12">
+                        <div class="info-box  bg-info">
+                            <span class="info-box-icon"><i class="far fa-calendar-check"></i></span>
 
-                                </h3>
-                                <p>
-                                    TA Requested
-                                </p>
-                                <small>
-                                    31% Ongoing or completed
-                                </small>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-bag"></i>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Planned</span>
+                                <span class="info-box-number" id="TAPlanned"></span>
 
+                                <div class="progress">
+                                    <div class="progress-bar" id="PercentTAPlanned" style="width: 70%"></div>
+                                </div>
+                                <span class="progress-description text-xs" id="textPercentTAPlanned">
+
+                                </span>
                             </div>
-                            <a href="#" class="small-box-footer">
-                                More info <i class="fa fa-arrow-circle-right"></i>
-                            </a>
-                        </div> -->
+
+
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <div class=" col-md-2 col-sm-6 col-12">
                         <div class="info-box  bg-primary">
                             <span class="info-box-icon"><i class="far fa-bookmark"></i></span>
 
                             <div class="info-box-content">
-                                <span class="info-box-text">Requested</span>
+                                <span class="info-box-text">TA Requests received</span>
                                 <span class="info-box-number" id="TARequested"></span>
 
                                 <div class="progress">
                                     <div class="progress-bar" id="PercentTARequested" style="width: 70%"></div>
                                 </div>
-                                <span class="progress-description" id="textPercentTARequested">
+                                <span class="progress-description text-xs" id="textPercentTARequested">
 
                                 </span>
                             </div>
+
 
                             <!-- /.info-box-content -->
                         </div>
                         <!-- /.info-box -->
                     </div>
                     <!-- /.col -->
-                    <div class=" col-md-3 col-sm-6 col-12">
+                    <div class=" col-md-2 col-sm-6 col-12">
                         <div class="info-box bg-success">
                             <span class="info-box-icon"><i class="far fa-thumbs-up"></i></span>
 
                             <div class="info-box-content">
-                                <span class="info-box-text">Completed</span>
+                                <span class="info-box-text">TA Completed</span>
                                 <span class="info-box-number" id="TACompleted"></span>
 
                                 <div class="progress">
                                     <div class="progress-bar" id="PercentTACompleted" style="width: 70%">
                                     </div>
                                 </div>
-                                <span class="progress-description" id="textPercentTACompleted">
+                                <span class="progress-description text-xs" id="textPercentTACompleted">
 
                                 </span>
                             </div>
@@ -95,18 +102,18 @@
                         <!-- /.info-box -->
                     </div>
                     <!-- /.col -->
-                    <div class="col-md-3 col-sm-6 col-12">
+                    <div class="col-md-2 col-sm-6 col-12">
                         <div class="info-box bg-warning">
                             <span class="info-box-icon"><i class="fa fa-spinner" style="color:white"></i></span>
 
                             <div class="info-box-content">
-                                <span class="info-box-text">Ongoing</span>
+                                <span class="info-box-text">TA Ongoing</span>
                                 <span class="info-box-number" id="TAOngoing"></span>
 
                                 <div class="progress">
                                     <div class="progress-bar" id="PercentTAOngoing" style="width: 70%"></div>
                                 </div>
-                                <span class="progress-description" id="textPercentTAOngoing">
+                                <span class="progress-description text-xs" id="textPercentTAOngoing">
 
                                 </span>
                             </div>
@@ -115,19 +122,19 @@
                         <!-- /.info-box -->
                     </div>
                     <!-- /.col -->
-                    <div class="col-md-3 col-sm-6 col-12">
+                    <div class="col-md-2 col-sm-6 col-12">
                         <div class="info-box bg-danger">
                             <span class="info-box-icon"><i class="ion-ios-alarm"></i></span>
 
                             <div class="info-box-content">
-                                <span class="info-box-text">Postponed</span>
+                                <span class="info-box-text">TA Postponed</span>
                                 <span class="info-box-number" id="TAPostponed"></span>
 
                                 <div class="progress">
                                     <div class="progress-bar" id="PercentTAPostponed" style="width: 70%">
                                     </div>
                                 </div>
-                                <span class="progress-description" id="textPercentTAPostponed">
+                                <span class="progress-description text-xs" id="textPercentTAPostponed">
 
                                 </span>
                             </div>
@@ -141,16 +148,33 @@
 
                 <div class="row">
                     <div class="col-md-12">
+
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="card-title"><a
                                         href="https://endmalaria.org/sites/default/files/CRSPC%20TA%20Plan%20ESA%20-%20WCA%20-%202021%20RBM_0.pdf">COUNTRY
                                         TECHNICAL ASSISTANCE (TA) PLAN FOR 2021</a>
                                 </h5>
-                                <p style="text-align: right"><small><em> Hover on bars indicating task duration bars to
-                                            see a full description</em></small></p>
+                                <p style="text-align: right"><small><em> Hover on bars indicating task duration to
+                                            see their full description</em></small></p>
 
                                 <div class="card-tools">
+                                    <div class="btn-group">
+                                        <button type="button" id="slist"
+                                            class="btn btn-default dropdown-toggle bg-primary text-xs"
+                                            data-toggle="dropdown">
+                                            Select Status
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-right has-mega-menu" role="menu"
+                                            id="sselect">
+                                            <a href="#" class="dropdown-item text-xs">All</a>
+                                            <a href="#" class="dropdown-item text-xs">Completed</a>
+                                            <a href="#" class="dropdown-item text-xs">Ongoing</a>
+                                            <a href="#" class="dropdown-item text-xs">Postponed</a>
+                                            <a href="#" class="dropdown-item text-xs">Pending/Unknown</a>
+
+                                        </div>
+                                    </div>
 
                                     <div class="btn-group">
                                         <button type="button" id="clist"
@@ -206,6 +230,7 @@
             <i class="fas fa-chevron-up"></i>
         </a>
 
+
         <!-- /.content-wrapper -->
 
 
@@ -231,7 +256,7 @@
     var g = new JSGantt.GanttChart(document.getElementById('GanttChartDIV'), 'quarter');
     function onlyUnique(value, index, self) { return self.indexOf(value) === index; }
 
-    function fillGantt(result, myCountry) {
+    function fillGantt(result, myCountry, thisOpened) {
         let cont = 0;
         let isOpen = 1;
         g.ClearTasks();
@@ -241,7 +266,7 @@
             temp = _.filter(result, ['cname', myCountry[i]]);
 
             let myD = []; let myldata = []; let myT = [];
-            if (i > 20) { isOpen = 0 };
+            if (i > thisOpened) { isOpen = 0 };
             //Define a group for the country
             let myPParent = cont;
 
@@ -291,6 +316,7 @@
                 };
                 //Fill in the Gantt structure
                 //Define the class of the bar and the completation according to status
+                let myNStatus = ""; var tt;
                 switch (temp[j].Status) {
                     case "Completed":
                         myClass = "gtaskgreen";
@@ -298,7 +324,15 @@
                         break;
                     case "Ongoing":
                         myClass = "gtaskyellow";
-                        myComp = (100 * (Math.abs(currentTime - startDate) / Math.abs(endDate - startDate))).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                        tt = (100 * (Math.abs(currentTime - startDate) / Math.abs(endDate - startDate))).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                        myComp = (tt > 100) ? 100 : tt;
+                        break;
+                    case "Undefined":
+                        myClass = "gtaskpurple";
+                        tt = (currentTime - startDate);
+
+                        myNStatus = (tt < 0) ? "Not yet due" : "Pending";
+                        myComp = 0;
                         break;
                     case "Requested":
                         myClass = "gtaskblue";
@@ -329,7 +363,7 @@
                     pParent: myPParent,
                     pOpen: isOpen,
                     pDepend: "",
-                    pCaption: temp[j].Status,
+                    pCaption: (myNStatus.length > 0) ? myNStatus : temp[j].Status,
                     pCost: 0,
                     pNotes: temp[j].Comments,
                     pBarText: "",
@@ -374,9 +408,11 @@
             let result = _.reject(results.data, { 'cname': null });
             result = _.reject(result, { 'cname': "Country" });
             //Erase Not Requested records
-            result = _.reject(result, { 'Status': "Not Requested" });
+            //result = _.reject(result, { 'Status': "Not Requested" });
             //Start filling the info boxes
-            $("#TARequested").text(result.length);
+
+            $("#TAPlanned").text(result.length);
+            $("#TARequested").text(result.length - _.filter(result, ['Status', "Not Requested"]).length);
             $("#TACompleted").text(_.filter(result, ['Status', "Completed"]).length);
             $("#TAOngoing").text(_.filter(result, ['Status', "Ongoing"]).length);
             $("#TAPostponed").text(_.filter(result, ['Status', "Postponed"]).length);
@@ -386,6 +422,12 @@
             //$("#PercentTACompleted").width(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }));
             $("#PercentTACompleted").attr("style", "width:" + myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "%");
             $("#textPercentTACompleted").text(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "% of requested TA");
+
+            var myNum;
+            var myNumC = _.filter(result, ['Status', "Not Requested"]).length;
+            myNum = 100 * (myNumC / result.length);
+            $("#PercentTAPlanned").attr("style", "width:" + myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "%");
+            $("#textPercentTAPlanned").text(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "% not requested");
 
             var myNumO = (_.filter(result, ['Status', "Ongoing"]).length);
             myNum = 100 * myNumO / result.length;
@@ -439,13 +481,32 @@
                 var myCountry = [$(this).text()];
                 if (myCountry[0] === "All") { myCountry = countries };
 
-                g = fillGantt(result, myCountry, g);
+                g = fillGantt(result, myCountry, 10);
 
                 g.Draw();
             });
-            var g = fillGantt(result, myCountry);
+            var g = fillGantt(result, myCountry, 10);
             g.Draw();
+            //Find a way to monitor the status dropdown list and filter by status if requested
+            var fresult;
+            $("#sselect a").on('click', function (e) {
+                e.preventDefault(); // cancel the link behaviour
+                var myStatus = [$(this).text()];
+                if (myStatus[0] === "All") {
+                    fresult = result
+                } else {
+                    console.log(myStatus)
+                    if (myStatus[0].startsWith("Pending")) { myStatus[0] = "Undefined" }
+                    fresult = _.filter(result, ['Status', myStatus[0]])
+                    console.log(fresult)
+                };
 
+                g = fillGantt(fresult, myCountry, 300);
+
+                g.Draw();
+            });
+            var g = fillGantt(result, myCountry, 10);
+            g.Draw();
 
 
 
