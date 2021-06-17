@@ -60,7 +60,7 @@
                             <span class="info-box-icon"><i class="far fa-bookmark"></i></span>
 
                             <div class="info-box-content">
-                                <span class="info-box-text">TA Dues</span>
+                                <span class="info-box-text">TA Due</span>
                                 <span class="info-box-number" id="TARequested"></span>
 
                                 <div class="progress">
@@ -101,7 +101,7 @@
                     <!-- /.col -->
                     <div class="col-md-2 col-sm-6 col-12">
                         <div class="info-box bg-warning" data-toggle="tooltip" data-placement="bottom"
-                            title="The percentage of ongoing TAs is referred to the dues TAs">
+                            title="The percentage of ongoing TAs is referred to the due TAs">
 
                             <span class="info-box-icon"><i class="fa fa-spinner" style="color:white"></i></span>
 
@@ -123,7 +123,7 @@
                     <!-- /.col -->
                     <div class="col-md-2 col-sm-6 col-12">
                         <div class="info-box bg-danger" data-toggle="tooltip" data-placement="bottom"
-                            title="The percentage of postponed TAs is referred to the dues TAs">
+                            title="The percentage of postponed TAs is referred to the due TAs">
 
                             <span class="info-box-icon"><i class="ion-ios-alarm"></i></span>
 
@@ -476,7 +476,7 @@
             myNum = 100 * myNume / (dueResult.length);
             //$("#PercentTARequested").width(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }));
             $("#PercentTARequested").attr("style", "width:" + myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "%");
-            $("#textPercentTARequested").text(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "% of dues TAs managed ");
+            $("#textPercentTARequested").text(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "% of due TAs managed ");
 
 
             //Populate dropdown list of countries
