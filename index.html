@@ -4,16 +4,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TA Dashboard | Widgets</title>
+    <title>TA Dashboard | 2021</title>
     <style type="text/css">
         .dropdown-menu {
             max-height: 200px;
             overflow-y: auto;
-        }
-
-        .red-tooltip+.tooltip.top>.tooltip-arrow {
-            background: rgb(49, 17, 235);
-            color: rgb(246, 246, 248);
         }
     </style>
     <!-- Google Font: Source Sans Pro -->
@@ -84,7 +79,7 @@
                     <!-- /.col -->
                     <div class=" col-md-2 col-sm-6 col-12">
                         <div class="info-box bg-success" data-toggle="tooltip" data-placement="bottom"
-                            title="The percentage of completed TAs is referred to the dues TAs">
+                            title="The percentage of completed TAs is referred to the managed TAs">
                             <span class="info-box-icon"><i class="far fa-thumbs-up"></i></span>
 
                             <div class="info-box-content">
@@ -249,11 +244,6 @@
     <!-- jQuery -->
     <script src="../plugins/jquery/jquery.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
-    <script src="/js/jquery-ui.min.js"></script>
-    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-    <script>
-        $.widget.bridge('uibutton', $.ui.button)
-    </script>
     <!-- Bootstrap 4 -->
     <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
@@ -274,7 +264,7 @@
 
     var g = new JSGantt.GanttChart(document.getElementById('GanttChartDIV'), 'quarter');
     function onlyUnique(value, index, self) { return self.indexOf(value) === index; }
-
+    function isValidDate(d) { return d instanceof Date && !isNaN(d); }
     function fillGantt(result, myCountry, thisOpened) {
         let cont = 0;
         let isOpen = 1;
@@ -422,19 +412,24 @@
             //Erase records where cname is empty
             let result = _.reject(results.data, { 'cname': null });
             result = _.reject(result, { 'cname': "Country" });
+            result = _.reject(result, ['Activity', null]);
             //Correct Dates for all
+            var isValid = [];
             result = _.forEach(result, function (value) {
                 var currentTime = new Date();
-
-                if (!(_.isEmpty(value.StartYear))) {
-                    startDate = new Date(value.OSDate);
-                    endDate = new Date(getFullYear(value.OSDate), getMonth(value.OSDate) + 2, 30);
+                //isValid = _.concat(isValid, isValidDate(startDate));
+                var myDate = new Date(value.OSDate);
+                if (myDate.getFullYear() === currentTime.getFullYear()) {
+                    //Modify the date so that due date is the end of the month if not defined
+                    var d = new Date(myDate.getFullYear(), myDate.getMonth() + 1, 0);
+                    startDate = d;
+                    endDate = new Date(myDate.getFullYear(), myDate.getMonth() + 2, 30);
                 } else {
-                    //Retrieve the Date from the quarter and year
+                    //Retrieve the Date from the quarter and year but only if there is not a full Date
                     if (!(_.isFinite(value.StartYear))) { value.StartYear = currentTime.getFullYear() };
                     if ((_.isFinite(value.StartQuarter) & (value.StartYear > (currentTime.getFullYear() - 1)))) {
                         endDate = new Date(value.StartYear, (value.StartQuarter * 3), 30);
-                        startDate = new Date(value.StartYear, (value.StartQuarter * 3 - 2), 1);
+                        startDate = new Date(value.StartYear, (value.StartQuarter * 3 - 2), 28);
                     }
                 }
                 value.startDate = startDate;
@@ -442,7 +437,7 @@
                 value.due = ((currentTime - startDate) > 0);
                 //console.log(value);
             });
-
+            console.log(isValid)
             //Start filling the info boxes
             //These are all TAs in the Table. Appear under label "TA Needs"
             $("#TAPlanned").text(result.length);
@@ -454,7 +449,7 @@
 
             dueResult = _.reject(dueResult, ['Status', "Not Requested"]);
             console.log(dueResult);
-            $("#TARequested").text(dueResult.length);
+            $("#TARequested").text(dueResult.length + notRequested.length);
             //These are all TAs in the Table minus the Not requested ones. Appear under label "TA Managed. This is the Denominator for the rest"
             $("#TACompleted").text(_.filter(dueResult, ['Status', "Completed"]).length);
             $("#TAOngoing").text(_.filter(dueResult, ['Status', "Ongoing"]).length);
@@ -465,17 +460,17 @@
             myNum = 100 * (myNumC / (dueResult.length));
             //$("#PercentTACompleted").width(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }));
             $("#PercentTACompleted").attr("style", "width:" + myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "%");
-            $("#textPercentTACompleted").text(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "% of dues TAs");
+            $("#textPercentTACompleted").text(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "% of managed TAs");
 
             var myNumO = (_.filter(dueResult, ['Status', "Ongoing"]).length);
             myNum = 100 * myNumO / (dueResult.length);
             $("#PercentTAOngoing").attr("style", "width:" + myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "%");
-            $("#textPercentTAOngoing").text(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "% of dues TAs");
+            $("#textPercentTAOngoing").text(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "% of managed TAs");
 
             var myNumP = (_.filter(dueResult, ['Status', "Postponed"]).length);
             myNum = 100 * myNumP / (dueResult.length);
             $("#PercentTAPostponed").attr("style", "width:" + myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "%");
-            $("#textPercentTAPostponed").text(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "% of dues TAs");
+            $("#textPercentTAPostponed").text(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "% of managed TAs");
             //By requested we mean the ones that have been or are under processing
             var myNume = _.filter(dueResult, ['Status', "Ongoing"]).length + _.filter(dueResult, ['Status', "Completed"]).length + _.filter(dueResult, ['Status', "Postponed"]).length;
             myNum = 100 * myNume / (dueResult.length);
