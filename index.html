@@ -11,15 +11,10 @@
             overflow-y: auto;
         }
     </style>
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="/css/adminlte.min.css">
+    <link rel="stylesheet" href="/css/myadminlteTA.min.css">
 </head>
 
 <body>
@@ -101,7 +96,7 @@
                     <!-- /.col -->
                     <div class="col-md-2 col-sm-6 col-12">
                         <div class="info-box bg-warning" data-toggle="tooltip" data-placement="bottom"
-                            title="The percentage of ongoing TAs is referred to the due TAs">
+                            title="The percentage of ongoing TAs is referred to the due TAs. It includes requested TAs where TORs are under processing">
 
                             <span class="info-box-icon"><i class="fa fa-spinner" style="color:white"></i></span>
 
@@ -124,8 +119,8 @@
                     <div class="col-md-2 col-sm-6 col-12">
                         <div class="info-box bg-danger" data-toggle="tooltip" data-placement="bottom"
                             title="The percentage of postponed TAs is referred to the due TAs">
-
-                            <span class="info-box-icon"><i class="ion-ios-alarm"></i></span>
+                            <span class="info-box-icon"><i class="fa fa-business-time" style="color:white"></i></span>
+                            <!-- <span class="info-box-icon"><i class="ion-ios-alarm"></i></span>-->
 
                             <div class="info-box-content">
                                 <span class="info-box-text">TA Postponed</span>
@@ -152,9 +147,7 @@
 
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="card-title"><a
-                                        href="https://endmalaria.org/sites/default/files/CRSPC%20TA%20Plan%20ESA%20-%20WCA%20-%202021%20RBM_0.pdf">COUNTRY
-                                        TECHNICAL ASSISTANCE (TA) PLAN FOR 2021</a>
+                                <h5 class="card-title">TECHNICAL ASSISTANCE (TA) PLAN FOR 2021</h5>
                                 </h5>
                                 <p style="text-align: right"><small><em> Hover on bars indicating task duration to
                                             see their full description</em></small></p>
@@ -173,7 +166,6 @@
                                             <a href="#" class="dropdown-item text-xs">Ongoing</a>
                                             <a href="#" class="dropdown-item text-xs">Postponed</a>
                                             <a href="#" class="dropdown-item text-xs">Pending/Unknown</a>
-                                            <a href="#" class="dropdown-item text-xs">Requested</a>
                                             <a href="#" class="dropdown-item text-xs">Not Requested</a>
 
                                         </div>
@@ -235,11 +227,11 @@
     <!-- Bootstrap 4 -->
     <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
-    <script src="../js/adminlte.min.js"></script>
-    <script src="/js/papaparse.min.js"></script>
-    <script src="/js/lodash.min.js"></script>
+    <script src="../js/adminlte.min.js" type="text/javascript" x-content-type-options="nosniff"></script>
+    <script src="/js/papaparse.min.js" type="text/javascript" x-content-type-options="nosniff"></script>
+    <script src="/js/lodash.min.js" type="text/javascript" x-content-type-options="nosniff"></script>
     <link href="/css/jsgantt.css" rel="stylesheet" type="text/css" />
-    <script src="/js/jsgantt.js" type="text/javascript"></script>
+    <script src="/js/jsgantt.js" type="text/javascript" x-content-type-options="nosniff"></script>
 
 </body>
 <script>
@@ -307,7 +299,7 @@
                     case "Ongoing":
                         myClass = "gtaskyellow";
                         tt = (100 * (Math.abs(new Date() - temp[j].startDate) / Math.abs(temp[j].endDate - temp[j].startDate))).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-                        myComp = (tt > 100) ? 100 : tt;
+                        myComp = (tt > 100) ? 90 : tt;
                         break;
                     case "Undefined":
                         myClass = "gtaskpurple";
@@ -315,9 +307,9 @@
                         myComp = 0;
                         break;
                     case "Requested":
-                        myClass = "gtaskblue";
-                        myNStatus = "Request Received";
-                        myComp = 0;
+                        myClass = "gtaskyellow";
+                        myNStatus = "Request under processing";
+                        myComp = 5;
                         break;
                     case "Postponed":
                         myClass = "gtaskred";
@@ -386,7 +378,7 @@
             let result = _.reject(results.data, { 'cname': null });
             result = _.reject(result, { 'cname': "Country" });
             result = _.reject(result, ['Activity', null]);
-            console.log(result)
+            //console.log(result)
             //Correct Dates for all
             result = _.forEach(result, function (value) {
                 var currentTime = new Date();
@@ -404,7 +396,7 @@
                         startDate = new Date(currentTime.getFullYear(), (value.StartMonth - 1), 28);
                     } else {
                         endDate = new Date(currentTime.getFullYear(), (value.StartQuarter * 3), 30);
-                        startDate = new Date(currentTime.getFullYear(), (value.StartQuarter * 3 - 2), 28);
+                        startDate = new Date(currentTime.getFullYear(), (value.StartQuarter * 3 - 2), 1);
                     }
                 }
                 value.startDate = startDate;
@@ -423,10 +415,14 @@
 
             dueResult = _.reject(dueResult, ['Status', "Not Requested"]);
             console.log(dueResult);
+            console.log(_.filter(dueResult, ['Status', "Completed"]).length);
+            console.log(_.filter(dueResult, ['Status', "Ongoing"]).length)
+            console.log(_.filter(dueResult, ['Status', "Postponed"]).length)
+            console.log(_.filter(dueResult, ['Status', "Requested"]).length)
             $("#TARequested").text(dueResult.length + notRequested.length);
             //These are all TAs in the Table minus the Not requested ones. Appear under label "TA Managed. This is the Denominator for the rest"
             $("#TACompleted").text(_.filter(dueResult, ['Status', "Completed"]).length);
-            $("#TAOngoing").text(_.filter(dueResult, ['Status', "Ongoing"]).length);
+            $("#TAOngoing").text(_.filter(dueResult, ['Status', "Ongoing"]).length + _.filter(dueResult, ['Status', "Requested"]).length);
             $("#TAPostponed").text(_.filter(dueResult, ['Status', "Postponed"]).length);
 
             var myNum;
@@ -436,7 +432,7 @@
             $("#PercentTACompleted").attr("style", "width:" + myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "%");
             $("#textPercentTACompleted").text(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "% of managed TAs");
 
-            var myNumO = (_.filter(dueResult, ['Status', "Ongoing"]).length);
+            var myNumO = (_.filter(dueResult, ['Status', "Ongoing"]).length + _.filter(dueResult, ['Status', "Requested"]).length);
             myNum = 100 * myNumO / (dueResult.length);
             $("#PercentTAOngoing").attr("style", "width:" + myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "%");
             $("#textPercentTAOngoing").text(myNum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "% of managed TAs");
