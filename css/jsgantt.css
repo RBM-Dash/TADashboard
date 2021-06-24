@@ -37,9 +37,9 @@ div.gantt {
 
 .gtasklist {
   height: 19px;
-  min-width: 5px;
-  max-width: 5px;
-  width: 5px;
+  min-width: 2px;
+  max-width: 2px;
+  width: 2px;
   border: #efefef 1px solid;
   border-right: none;
 }
@@ -139,9 +139,9 @@ td.gspanning {
 .gstartdate,
 .genddate {
   text-align: center;
-  min-width: 105px;
-  width: 105px;
-  max-width: 105px;
+  min-width: 80px;
+  width: 80px;
+  max-width: 80px;
   font-size: 11px;
 }
 
@@ -153,30 +153,31 @@ td.gspanning {
 /* needed for IE8 */
 
 .gtaskname {
-  min-width: 170px;
-  max-width: 170px;
-  width: 170px;
+  min-width:170px;
+  max-width: 350px;
+  width: 350px;
   font-size: 11px;
   border-left: none;
+  
 }
 
 .gtaskheading,
 .gtaskname {
   text-overflow: ellipsis;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 .gtaskname.gtaskeditable div,
 .gtaskname.gtaskeditable {
-  overflow: unset;
+  overflow: scroll;
 }
 
 .gselector {
   text-align: left;
   white-space: nowrap;
-  min-width: 170px;
-  max-width: 170px;
-  width: 170px;
+  min-width: 80px;
+  max-width: 80px;
+  width: 80px;
 }
 
 .gformlabel {
@@ -517,10 +518,10 @@ div.gtaskbarcontainer {
 
 .gTaskInfo {
   background: #00070f;
-  width: 300px;
+  width:350px;
   border: #656565 1px solid;
   border-radius: 10px;
-  padding: 4px 6px 4px 6px;
+  padding: 2px 2px 2px 2px;
   float: left;
   color: white;
 }
@@ -696,7 +697,7 @@ td.gmajorheading div {
 /* stops resizing fixed width columns if the text is too wide */
 
 td.gspanning div {
-  *overflow: hidden;
+  *overflow: auto;
 }
 
 /* stops resizing fixed width columns if the text is too wide */
@@ -999,7 +1000,7 @@ td.gspanning div {
   border-radius: 8px;
   border: 2px solid white;
   /* should match background, can't be transparent */
-  background-color: rgba(0, 0, 0, .5);
+  background-color: rgba(69, 8, 212, 0.5);
 }
 
 .frame::-webkit-scrollbar-track {
