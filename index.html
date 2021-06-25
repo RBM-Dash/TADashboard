@@ -319,7 +319,7 @@
         g.setAdditionalHeaders({ pCaption: { title: 'Status' } });
         g.setOptions({
             vCaptionType: 'Complete',  // Set to Show Caption : None,Caption,Resource,Duration,Complete,     
-            vQuarterColWidth: 18,
+            vQuarterColWidth: 20,
             vDateTaskDisplayFormat: 'month yyyy', // Shown in tool tip box
             vShowTaskInfoLink: 0, // Show link in tool tip (0/1)
             vShowEndWeekDate: 0,  // Show/Hide the date for the last day of the week in header for daily view (1/0)
@@ -380,7 +380,7 @@
             $("#percentComp2Due").text((100 * _.filter(result, ['Status', "Completed"]).length / dueResult.length).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "% of due TAs");
             $("#TAOngoing").text(_.filter(result, ['Status', "Ongoing"]).length + _.filter(dueResult, ['Status', "Requested"]).length);
             $("#TAPostponed").text(_.filter(result, ['Status', "Postponed"]).length);
-            $("#percentOng2Due").text((100 * _.filter(result, ['Status', "Ongoing"]).length / dueResult.length).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "% of due TAs");
+            $("#percentOng2Due").text((100 * (_.filter(result, ['Status', "Ongoing"]).length + + _.filter(dueResult, ['Status', "Requested"]).length) / dueResult.length).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "% of due TAs");
             $("#percentPost2Due").text((100 * _.filter(result, ['Status', "Postponed"]).length / dueResult.length).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "% of due TAs");
 
 
