@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="/css/myadminlteTA.min.css">
+
 </head>
 
 <body>
@@ -28,7 +29,7 @@
                 <div class="row">
                     <div class="col-md-3 col-sm-6 col-12">
                         <div class="small-box  bg-primary" data-toggle="tooltip" data-placement="bottom"
-                            title="Requested TAs are the subset of needed TAs, formally requested by coutries eligible for tecjnical support in current year">
+                            title="All TAs formally requested by coutries eligible for technical support in current year">
                             <div class="inner">
                                 <h3 id="TAPlanned"></h3>
 
@@ -37,7 +38,7 @@
                             <div class="icon">
                                 <i class="far fa-calendar-check"></i>
                             </div>
-                            <a href="#" class="small-box-footer" id="dueTA">
+                            <a href="#" class="small-box-footer text-sm-right" id="dueTA">
                                 <!-- <i class="fas fa-calendar-day"></i> -->
                             </a>
                             <!-- /.info-box-content -->
@@ -47,7 +48,7 @@
                     <!-- /.col -->
                     <div class="col-md-3 col-sm-6 col-12">
                         <div class="small-box bg-success" data-toggle="tooltip" data-placement="bottom"
-                            title="All TAs completed up-to-date">
+                            title="All TAs completed up-to-date. Note that some TAs can start to be processed before their starting date and therefore added percentages can be over 100%">
                             <div class="inner">
                                 <h3 id="TACompleted"></h3>
 
@@ -56,7 +57,7 @@
                             <div class="icon">
                                 <i class="far fa-thumbs-up"></i>
                             </div>
-                            <a href="#" class="small-box-footer text-sm" id="percentComp2Due">
+                            <a href="#" class="small-box-footer text-sm-right" id="percentComp2Due">
                                 <!--   <i class="fas fa-arrow-circle-right"></i> -->
                             </a>
                         </div>
@@ -65,7 +66,7 @@
                     <!-- /.col -->
                     <div class="col-md-3 col-sm-6 col-12">
                         <div class="small-box bg-warning" data-toggle="tooltip" data-placement="bottom"
-                            title="Ongoing TAs include requested TAs ¨where processing of TORs have been initiated">
+                            title="Ongoing TAs include requested TAs where processing of TORs have been initiated">
                             <div class="inner">
                                 <h3 id="TAOngoing"></h3>
                                 <p>Ongoing TAs</p>
@@ -73,7 +74,7 @@
                             <div class="icon">
                                 <i class="fa fa-spinner"></i>
                             </div>
-                            <a href="#" class="small-box-footer">
+                            <a href="#" class="small-box-footer text-sm-right" id="percentOng2Due">
                                 <!-- <i class="fas fa-arrow-circle-right"></i> -->
                             </a>
                         </div>
@@ -91,7 +92,7 @@
                             <div class="icon">
                                 <i class="fa fa-business-time"></i>
                             </div>
-                            <a href="#" class="small-box-footer">
+                            <a href="#" class="small-box-footer text-sm-right" id="percentPost2Due">
                                 <!-- Hover for definitions<i class="fas fa-arrow-circle-right"></i> -->
                             </a>
                             <!-- /.info-box-content -->
@@ -371,13 +372,16 @@
             var notRequested = (_.filter(result, ['Status', "Not Requested"]));
             $("#TAPlanned").text(result.length - notRequested.length);
             var dueResult = (_.filter(result, ['due', true]));
-            var dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+            var dateOptions = { month: 'long', day: 'numeric' };
             dueResult = _.reject(dueResult, ['Status', "Not Requested"]);
             var today = new Date();
-            //$("#dueTA").text(dueResult.length + " TAs dued on " + today.toLocaleDateString("en-US", dateOptions));
+            $("#dueTA").text(dueResult.length + " due on " + today.toLocaleDateString("en-US", dateOptions));
             $("#TACompleted").text(_.filter(result, ['Status', "Completed"]).length);
+            $("#percentComp2Due").text((100 * _.filter(result, ['Status', "Completed"]).length / dueResult.length).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "% of due TAs");
             $("#TAOngoing").text(_.filter(result, ['Status', "Ongoing"]).length + _.filter(dueResult, ['Status', "Requested"]).length);
             $("#TAPostponed").text(_.filter(result, ['Status', "Postponed"]).length);
+            $("#percentOng2Due").text((100 * _.filter(result, ['Status', "Ongoing"]).length / dueResult.length).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "% of due TAs");
+            $("#percentPost2Due").text((100 * _.filter(result, ['Status', "Postponed"]).length / dueResult.length).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + "% of due TAs");
 
 
             //Populate dropdown list of countries
