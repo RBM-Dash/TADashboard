@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TA Dashboard | 2021</title>
+    <title>TA Dashboard | 2022</title>
     <style type="text/css">
         .dropdown-menu {
             max-height: 200px;
@@ -25,11 +25,11 @@
         <section class="content">
             <div class="container-fluid">
                 <!-- =========================================================== -->
-                <!-- <h5 class="mt-4 mb-2">Technical Assistance (2021)</h5> -->
+                <!-- <h5 class="mt-4 mb-2">Technical Assistance (2022)</h5> -->
                 <div class="row">
                     <div class="col-md-3 col-sm-6 col-12">
                         <div class="small-box  bg-primary" data-toggle="tooltip" data-placement="bottom"
-                            title="All TAs formally requested by coutries eligible for technical support in current year">
+                            title="All TAs formally requested by coutries eligible for technical support in 2022">
                             <div class="inner">
                                 <h3 id="TAPlanned"></h3>
 
@@ -108,12 +108,23 @@
 
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="card-title">TECHNICAL ASSISTANCE (TA) PLAN FOR 2021</h5>
+                                <h5 class="card-title">TECHNICAL ASSISTANCE (TA) PLAN FOR 2022</h5>
 
                                 <p style="text-align: right"><small><em> Hover on bars indicating task duration to
                                             see their full description</em></small></p>
+                                <div class="float-left">
+                                    <a class="btn btn-default bg-primary float-left"
+                                        href="javascript:void( window.open( 'https://form.jotform.com/212803157172046',
+                                                                                    'blank', 'scrollbars=yes, toolbar=no, width=700, height=500' ) ) "><i
+                                            class="fas fa-pencil-alt"></i>Apply for TA (Click)</a>
+                                </div>
                                 <div class="card-tools">
+
                                     <div class="btn-group">
+                                        <a class="btn btn-default bg-primary text-xs"
+                                            href="javascript:void( window.open( 'https://docs.google.com/spreadsheets/d/1xsPExqsKbg9HeKHeDbzwsqH9el4DCwFSIHgPfjQ9KBM/edit?usp=sharing',
+                                                                                                                            'blank', 'scrollbars=yes, toolbar=no, width=700, height=500' ) ) ">Access
+                                            data <i class="fas fa-download"></i></a>
                                         <button type="button" id="slist"
                                             class="btn btn-default dropdown-toggle bg-primary text-xs"
                                             data-toggle="dropdown">
@@ -217,6 +228,7 @@
             //Define a group for the country
             let myPParent = cont;
             var dates = temp.map(function (x) { return new Date(x.startDate); });
+            console.log(dates)
             var earliest = new Date(Math.min.apply(null, dates));
             var latest = new Date(Math.max.apply(null, temp.map(function (x) { return new Date(x.endDate); })));
             cont = cont + 1;
@@ -328,7 +340,8 @@
         });
         return g;
     };
-    Papa.parse("https://docs.google.com/spreadsheets/d/1KUQ4RLhfd9y4HSLiDdkFGS7cuLr9-YMXqzNHpVV4nf4/gviz/tq?tqx=out:csv&sheet=MyTA 2021", {
+    Papa.parse("https://docs.google.com/spreadsheets/d/1KUQ4RLhfd9y4HSLiDdkFGS7cuLr9-YMXqzNHpVV4nf4/gviz/tq?tqx=out:csv&sheet=MyTA 2022", {
+
         download: true,
         header: true,
         dynamicTyping: true,
@@ -337,11 +350,14 @@
             //Erase records where cname is empty
             let result = _.reject(results.data, { 'cname': null });
             result = _.reject(result, { 'cname': "Country" });
+            result = _.reject(result, ['cname', '#REF!']);
             result = _.reject(result, ['Activity', null]);
             //console.log(result)
             //Correct Dates for all
             result = _.forEach(result, function (value) {
                 var currentTime = new Date();
+                currentTime.setYear(2022)
+                console.log(currentTime)
                 var myDate = new Date(value.OSDate);
                 if (myDate.getFullYear() === currentTime.getFullYear()) {
                     //Modify the date so that due date is the end of the month if not defined
